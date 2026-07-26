@@ -1,0 +1,207 @@
+1.Java architecture 
+
+"Write Once, Run Anywhere" (WORA)
+
+JDK: The complete software kit containing everything required to compile, run and debug applications.
+JRE: The deployment package providing runtime support and the Java Standard Libraries needed to execute already compiled bytecode.
+JVM: The heart of the platform that directly parses bytecode into computer-specific machine code
+
+Compiler - converts Source code into Byte code.
+
+JDK (Java Development Kit) provides tools and libraries to develop Java applications, working with JRE and JVM. JRE (Java Runtime Environment) offers the libraries and JVM needed to run Java programs. JVM (Java Virtual Machine) executes the compiled Java bytecode on the system.
+JDK is mainly used by developers, while JRE is required by end-users to run applications.
+The JVM executes bytecode, making programs platform-independent across systems.
+
+
+JDK vs JRE vs JVM
+
+
+Aspect
+JDK
+JRE
+JVM
+Purpose
+Used to develop Java applications
+Used to run Java applications
+Executes Java bytecode
+Platform Dependency
+Platform-dependent (OS specific)
+Platform-dependent (OS specific)
+JVM is OS-specific, but bytecode is platform-independent
+Includes
+JRE + Development tools (javac, debugger, etc.)
+JVM + Libraries (e.g., rt.jar)
+ClassLoader, JIT Compiler, Garbage Collector
+Use Case
+Writing and compiling Java code
+Running a Java application on a system
+Convert bytecode into native machine code
+
+
+
+JDK (Java Development Kit)
+JDK is a software development kit used to build Java applications. It contains the JRE and a set of development tools.
+Includes compiler (javac), debugger, and utilities like jar and javadoc.
+Provides the JRE, so it also allows running Java programs.
+Required by developers to write, compile, and debug code.
+Components of JDK:
+JRE (JVM + libraries)
+Development tools (compiler, jar, javadoc, debugger)
+Note:
+JDK is used for development, but it also includes the JRE, so it can be used to run Java programs as well.
+JDK is platform-dependent (different version for windows, Linux, macOS)
+Working of JDK
+Source Code (.java): Developer writes a Java program.
+Compilation: The JDK’s compiler (javac) converts the code into bytecode stored in .class files.
+Execution: The JVM executes the bytecode, translating it into native instructions.
+JRE (Java Runtime Environment)
+JRE provides an environment to run Java programs but does not include development tools. It is intended for end-users who only need to execute applications.
+Contains the JVM and standard class libraries.
+Provides all runtime requirements for Java applications.
+Does not support compilation or debugging.
+Note:
+JRE is only for running applications, not for developing them.
+It is platform-dependent (different builds for different OS).
+Working of JRE:
+Class Loading: Loads compiled .class files into memory.
+Bytecode Verification: Ensures security and validity of bytecode.
+Execution: Uses the JVM (interpreter + JIT compiler) to execute instructions and make system calls.
+JVM (Java Virtual Machine)
+JVM is the core execution engine of Java. It is responsible for converting bytecode into machine-specific instructions.
+Part of both JDK and JRE.
+Performs memory management and garbage collection.
+Provides portability by executing the same bytecode on different platforms.
+Note:
+JVM implementations are platform-dependent.
+Bytecode is platform-independent and can run on any JVM.
+Modern JVMs rely heavily on Just-In-Time (JIT) compilation for performance.
+
+
+
+
+
+
+2.Data Types :
+Data types in Java define the kind of data a variable can hold and the memory required to store it. They are broadly divided into two categories:
+Primitive Data Types: Store simple values directly in memory.
+Non-Primitive (Reference) Data Types: Store memory references to objects.
+1. Primitive Data Types
+Primitive data types store simple values directly in memory. Java provides eight primitive data types, each with a fixed size and range, which are summarized below:
+
+
+Type
+Description
+Size
+Example
+Range
+boolean
+Logical values
+Not JVM-defined
+true, false
+true or false
+byte
+8-bit signed integer
+1 byte
+10
+-128 to 127
+char
+16-bit Unicode character
+2 bytes
+'A', '\u0041'
+0 to 65,535
+short
+16-bit signed integer
+2 bytes
+2000
+-32,768 to 32,767
+int
+32-bit signed integer
+4 bytes
+1000, -500
+-2,147,483,648 to 2,147,483,647
+long
+64-bit signed integer
+8 bytes
+123456789L
+±9.22e18
+float
+32-bit floating point
+4 bytes
+3.14f
+~6–7 digits precision
+double
+64-bit floating point
+8 bytes
+3.14159d
+~15–16 digits precision
+
+
+
+2.Non-Primitive (Reference) Data Types
+Non-primitive data types store references (memory addresses) rather than actual values. They are created by users and include types like String, Class, Object, Interface, and Array.
+
+
+
+
+
+
+3.Operators
+Methods are blocks of code that perform a specific task. A method allows us to reuse code, improving both efficiency and organization
+Arithmatic
+Increment
+Bitwise
+Assignment
+Relational
+Logical
+Ternary
+ a>b ? sysout(a is big) : 
+
+
+4.Access Modifiers
+Methods are blocks of code that perform a specific task. A method allows us to reuse code, improving both efficiency and organization
+
+
+
+
+5.Methods
+Methods are blocks of code that perform a specific task. A method allows us to reuse code, improving both efficiency and organization
+
+accessModifier returnType methodName(parameterType parameter1, parameterType parameter2) {
+    // Method body: code to execute
+    return value; // Optional: required if returnType is not void
+}
+
+Parameters: The variables listed in the method's definition (e.g., int a and int b).
+Arguments: The actual data values passed into the method when it is called (e.g., 5 and 10). [1, 2]
+
+Types of Methods 
+
+
+1. Predefined Method
+Predefined methods are the method that is already defined in the Java class libraries. It is also known as the standard library method or built-in method.
+For example, random() method which is present in the Math class and we can call it using the ClassName.methodName() as shown in the below example.
+Math.random()    // returns random value
+Math.PI     //returns the value of π as a constant. it is a Constant not a Method
+
+
+2. User-defined Method
+The method written by the user or programmer is known as a user-defined method. These methods are modified according to the requirement.
+Different Ways to Create Java Method
+There are two ways to create a method in Java:
+1. Instance Method: Access the instance data using the object name. Declared inside a class.
+Example:
+// Instance Method
+void method_name() {
+   // instance method body
+}
+2. Static Method: Access the static data using class name. Declared inside class with static keyword.
+Example:
+// Static Method
+static void method_name() {
+   // static method body
+}
+
+
+
+
+

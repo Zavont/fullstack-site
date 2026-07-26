@@ -396,6 +396,12 @@ function loadCourseTopic(index) {
             link.classList.remove('active');
         }
     });
+    
+    // Close sidebar on mobile after selection
+    const sidebar = document.querySelector('.course-sidebar');
+    if (sidebar && sidebar.classList.contains('open')) {
+        sidebar.classList.remove('open');
+    }
 }
 
 function loadNextTopicCourseView() {
@@ -412,9 +418,20 @@ function closeCourseView(e) {
     if (e) e.preventDefault();
     document.getElementById('courseView').style.display = 'none';
     document.getElementById('landingPage').style.display = 'block';
+    
+    // Close sidebar if open
+    const sidebar = document.querySelector('.course-sidebar');
+    if (sidebar) sidebar.classList.remove('open');
+    
     window.scrollTo(0, 0);
 }
 
+function toggleCourseSidebar() {
+    const sidebar = document.querySelector('.course-sidebar');
+    if (sidebar) {
+        sidebar.classList.toggle('open');
+    }
+}
 
 // Initial setup on window load
 window.addEventListener('DOMContentLoaded', () => {
@@ -444,6 +461,32 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    
+    // Hamburger Menu Toggle for Responsive Mode
+    const hamburgerMenu = document.getElementById('hamburgerMenu');
+    const navMenu = document.querySelector('.nav');
+    
+    if (hamburgerMenu && navMenu) {
+        hamburgerMenu.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+    }
+    
+    // Close mobile menu when a data-topic link or anchor link is clicked
+    const allLinks = document.querySelectorAll('.nav a');
+    allLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            // Don't close if it's a dropdown header (has a chevron)
+            if (link.querySelector('.chevron')) {
+                // Let the hover/click CSS handle the dropdown expansion
+                e.preventDefault();
+                return;
+            }
+            if (navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+            }
+        });
+    });
     
     // Initialize sandbox with HTML topic
     loadTopic('html');
