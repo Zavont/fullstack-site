@@ -1,0 +1,57 @@
+{
+  "language": "Java",
+  "themeColor": "#ea580c",
+  "description": "Java is a high-level, class-based, object-oriented programming language designed to have as few implementation dependencies as possible.",
+  "topics": [
+    {
+      "id": "basics",
+      "title": "Basics",
+      "content": "<div class=\"course-topic\">\n  <h2>Java Basics</h2>\n  <p>Java is an object-oriented programming language produced by Sun Microsystems (now Oracle). It is platform-independent, meaning \"Write Once, Run Anywhere\" (WORA).</p>\n  <h3>Hello World Example</h3>\n  <pre><code>public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello, World!\");\n    }\n}</code></pre>\n  <p>Every Java program must have at least one class and a <code>main</code> method which is the entry point of the application.</p>\n</div>"
+    },
+    {
+      "id": "data-types",
+      "title": "Data Types",
+      "content": "<div class=\"course-topic\">\n  <h2>Data Types in Java</h2>\n  <p>Java is a strongly typed language. Every variable must have a declared type.</p>\n  <h3>Primitive Data Types</h3>\n  <ul>\n    <li><code>int</code>: 32-bit integer.</li>\n    <li><code>double</code>: 64-bit floating-point.</li>\n    <li><code>boolean</code>: <code>true</code> or <code>false</code>.</li>\n    <li><code>char</code>: 16-bit Unicode character.</li>\n  </ul>\n  <pre><code>int age = 25;\ndouble price = 19.99;\nboolean isValid = true;\nchar grade = 'A';</code></pre>\n</div>"
+    },
+    {
+      "id": "control-statements",
+      "title": "Control Statements",
+      "content": "<div class=\"course-topic\">\n  <h2>Control Statements</h2>\n  <p>Control flow statements break up the flow of execution by employing decision making, looping, and branching.</p>\n  <h3>If-Else and Loops</h3>\n  <pre><code>int x = 10;\nif (x > 5) {\n    System.out.println(\"x is greater than 5\");\n} else {\n    System.out.println(\"x is 5 or less\");\n}\n\n// For Loop\nfor (int i = 0; i < 5; i++) {\n    System.out.println(i);\n}</code></pre>\n</div>"
+    },
+    {
+      "id": "oop",
+      "title": "OOP",
+      "content": "<div class=\"course-topic\">\n  <h2>Object-Oriented Programming (OOP)</h2>\n  <p>Java's core paradigm is OOP. The four main pillars are:</p>\n  <ul>\n    <li><strong>Encapsulation</strong>: Hiding internal state (using <code>private</code>) and requiring all interaction to be performed through an object's methods.</li>\n    <li><strong>Inheritance</strong>: Creating new classes based on existing ones using the <code>extends</code> keyword.</li>\n    <li><strong>Polymorphism</strong>: The ability of an object to take on many forms (method overriding and overloading).</li>\n    <li><strong>Abstraction</strong>: Hiding complex implementation details and showing only the essential features.</li>\n  </ul>\n  <pre><code>public class Animal {\n    public void makeSound() {\n        System.out.println(\"Some sound\");\n    }\n}\n\npublic class Dog extends Animal {\n    @Override\n    public void makeSound() {\n        System.out.println(\"Bark\");\n    }\n}</code></pre>\n</div>"
+    },
+    {
+      "id": "interfaces",
+      "title": "Interfaces",
+      "content": "<div class=\"course-topic\">\n  <h2>Interfaces</h2>\n  <p>An interface is a completely \"abstract class\" that is used to group related methods with empty bodies.</p>\n  <pre><code>public interface Drawable {\n    void draw();\n}\n\npublic class Circle implements Drawable {\n    public void draw() {\n        System.out.println(\"Drawing a circle\");\n    }\n}</code></pre>\n  <p>Since Java 8, interfaces can also contain <code>default</code> and <code>static</code> methods with implementations.</p>\n</div>"
+    },
+    {
+      "id": "collections",
+      "title": "Collections",
+      "content": "<div class=\"course-topic\">\n  <h2>Java Collections Framework</h2>\n  <p>The Collections framework provides an architecture to store and manipulate a group of objects.</p>\n  <h3>Common Interfaces and Classes</h3>\n  <ul>\n    <li><strong>List</strong>: <code>ArrayList</code>, <code>LinkedList</code> (Ordered, allows duplicates).</li>\n    <li><strong>Set</strong>: <code>HashSet</code>, <code>TreeSet</code> (Unordered, no duplicates).</li>\n    <li><strong>Map</strong>: <code>HashMap</code>, <code>TreeMap</code> (Key-Value pairs).</li>\n  </ul>\n  <pre><code>List&lt;String&gt; names = new ArrayList&lt;&gt;();\nnames.add(\"Alice\");\nnames.add(\"Bob\");\n\nMap&lt;String, Integer&gt; ages = new HashMap&lt;&gt;();\nages.put(\"Alice\", 28);</code></pre>\n</div>"
+    },
+    {
+      "id": "exception-handling",
+      "title": "Exception Handling",
+      "content": "<div class=\"course-topic\">\n  <h2>Exception Handling</h2>\n  <p>Exceptions are used to handle errors gracefully without crashing the program.</p>\n  <pre><code>try {\n    int result = 10 / 0;\n} catch (ArithmeticException e) {\n    System.out.println(\"Cannot divide by zero!\");\n} finally {\n    System.out.println(\"This block always executes.\");\n}</code></pre>\n  <p>Java categorizes exceptions into Checked (compile-time) and Unchecked (runtime) exceptions.</p>\n</div>"
+    },
+    {
+      "id": "file-handling",
+      "title": "File Handling",
+      "content": "<div class=\"course-topic\">\n  <h2>File Handling (I/O)</h2>\n  <p>Java provides the <code>java.io</code> and <code>java.nio</code> packages for reading and writing data to files.</p>\n  <pre><code>import java.nio.file.*;\n\n// Writing to a file\nPath path = Paths.get(\"example.txt\");\nFiles.writeString(path, \"Hello File!\");\n\n// Reading from a file\nString content = Files.readString(path);\nSystem.out.println(content);</code></pre>\n</div>"
+    },
+    {
+      "id": "generics",
+      "title": "Generics",
+      "content": "<div class=\"course-topic\">\n  <h2>Generics</h2>\n  <p>Generics enable types (classes and interfaces) to be parameters when defining classes, interfaces, and methods. They provide stronger type checks at compile time.</p>\n  <pre><code>public class Box&lt;T&gt; {\n    private T item;\n    public void set(T item) { this.item = item; }\n    public T get() { return this.item; }\n}\n\nBox&lt;String&gt; stringBox = new Box&lt;&gt;();\nstringBox.set(\"Hello\");</code></pre>\n</div>"
+    },
+    {
+      "id": "stream",
+      "title": "Stream",
+      "content": "<div class=\"course-topic\">\n  <h2>Stream API</h2>\n  <p>Introduced in Java 8, the Stream API is used to process collections of objects in a functional and declarative manner.</p>\n  <pre><code>List&lt;String&gt; names = Arrays.asList(\"John\", \"Jane\", \"Jack\", \"Doe\");\n\n// Filter and print names starting with 'J'\nnames.stream()\n     .filter(name -&gt; name.startsWith(\"J\"))\n     .forEach(System.out::println);</code></pre>\n</div>"
+    }
+  ]
+}

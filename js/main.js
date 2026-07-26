@@ -304,6 +304,15 @@ function copyCode() {
     });
 }
 
+function loadNextTopic() {
+    const keys = Object.keys(topics);
+    let nextIndex = keys.indexOf(currentTopicKey) + 1;
+    if (nextIndex >= keys.length) {
+        nextIndex = 0;
+    }
+    loadTopic(keys[nextIndex]);
+}
+
 function showToast(message) {
     const toast = document.getElementById('copyToast');
     const toastText = document.getElementById('toastText');
@@ -315,21 +324,128 @@ function showToast(message) {
     }, 2500);
 }
 
+// Course View State
+let currentCourseData = null;
+let currentCourseTopicIndex = 0;
+
+async function openCourseView(langKey) {
+    try {
+        // Try fetching from res/
+        const response = await fetch(`res/${langKey}.json`);
+        if (!response.ok) {
+            // Fallback to old sandbox behavior if JSON not found
+            console.warn(`No JSON found for ${langKey}. Falling back to sandbox.`);
+            loadTopic(langKey);
+            document.getElementById('sandbox').scrollIntoView({ behavior: 'smooth' });
+            return;
+        }
+        
+        currentCourseData = await response.json();
+        
+        // Hide landing page, show course view
+        document.getElementById('landingPage').style.display = 'none';
+        document.getElementById('courseView').style.display = 'flex';
+        
+        // Populate Sidebar
+        const sidebarList = document.getElementById('courseSidebarList');
+        sidebarList.innerHTML = '';
+        
+        document.getElementById('courseSidebarTitle').innerText = currentCourseData.language;
+        
+        // Set CSS variable for theme
+        document.getElementById('courseView').style.setProperty('--theme-color', currentCourseData.themeColor);
+        
+        currentCourseData.topics.forEach((topic, index) => {
+            const li = document.createElement('li');
+            li.className = 'sidebar-item';
+            
+            const a = document.createElement('a');
+            a.className = 'sidebar-link';
+            a.innerText = topic.title;
+            a.onclick = (e) => {
+                e.preventDefault();
+                loadCourseTopic(index);
+            };
+            
+            li.appendChild(a);
+            sidebarList.appendChild(li);
+        });
+        
+        // Load first topic
+        loadCourseTopic(0);
+        window.scrollTo(0, 0);
+        
+    } catch (err) {
+        console.error("Error loading course:", err);
+    }
+}
+
+function loadCourseTopic(index) {
+    if (!currentCourseData || !currentCourseData.topics[index]) return;
+    currentCourseTopicIndex = index;
+    
+    const topic = currentCourseData.topics[index];
+    document.getElementById('courseMainContent').innerHTML = topic.content;
+    
+    // Update active state in sidebar
+    const links = document.querySelectorAll('#courseSidebarList .sidebar-link');
+    links.forEach((link, idx) => {
+        if (idx === index) {
+            link.classList.add('active');
+        } else {
+            link.classList.remove('active');
+        }
+    });
+}
+
+function loadNextTopicCourseView() {
+    if (!currentCourseData) return;
+    let nextIndex = currentCourseTopicIndex + 1;
+    if (nextIndex >= currentCourseData.topics.length) {
+        nextIndex = 0; // loop back to start
+    }
+    loadCourseTopic(nextIndex);
+    window.scrollTo(0, 0);
+}
+
+function closeCourseView(e) {
+    if (e) e.preventDefault();
+    document.getElementById('courseView').style.display = 'none';
+    document.getElementById('landingPage').style.display = 'block';
+    window.scrollTo(0, 0);
+}
+
+
 // Initial setup on window load
 window.addEventListener('DOMContentLoaded', () => {
-    // Click events for interactive elements
+    // Click events for interactive elements (Navbar and Quick Cards)
     const links = document.querySelectorAll('[data-topic]');
     links.forEach(link => {
-        link.addEventListener('click', (e) => {
+        link.addEventListener('click', async (e) => {
             e.preventDefault();
             const topicKey = link.getAttribute('data-topic');
-            loadTopic(topicKey);
-            
-            // Scroll to the workspace
-            document.getElementById('sandbox').scrollIntoView({ behavior: 'smooth' });
+            await openCourseView(topicKey);
         });
     });
     
-    // Initialize with HTML topic
+    // Contact form submit interceptor
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const message = document.getElementById('contactMessage').value;
+            
+            if (name && email && message) {
+                showToast(`Thank you, ${name}! Your message has been sent.`);
+                contactForm.reset();
+            }
+        });
+    }
+    
+    // Initialize sandbox with HTML topic
     loadTopic('html');
 });
+
