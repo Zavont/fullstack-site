@@ -1,5 +1,10 @@
 1.Basics
- - intro
+ - intro    
+    -Understanding Cascading
+    -Key Features of CSS
+    -Advantages of CSS
+    -CSS Syntax
+    
 
  - styling html
     - inline

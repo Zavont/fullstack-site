@@ -1409,7 +1409,7 @@ body {
         background: #040406;
         /* Solid background to prevent overlap */
         border-bottom: 1px solid var(--border);
-        padding: 2rem 0;
+        padding: 1rem 0;
         z-index: 1000;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
@@ -1430,7 +1430,7 @@ body {
     }
 
     .nav-link {
-        padding: 2rem 2rem;
+        padding: 1rem 2rem;
         width: 100%;
         display: flex;
         justify-content: space-between;
