@@ -346,7 +346,7 @@ async function openCourseView(langKey) {
         document.getElementById('landingPage').style.display = 'none';
         document.getElementById('courseView').style.display = 'flex';
         
-        // Populate Sidebar
+        // Populate Sidebar with Collapsible Accordion Sections
         const sidebarList = document.getElementById('courseSidebarList');
         sidebarList.innerHTML = '';
         
@@ -355,24 +355,61 @@ async function openCourseView(langKey) {
         // Set CSS variable for theme
         document.getElementById('courseView').style.setProperty('--theme-color', currentCourseData.themeColor);
         
+        // Group topics by section
+        const sectionsMap = new Map();
         currentCourseData.topics.forEach((topic, index) => {
-            const li = document.createElement('li');
-            li.className = 'sidebar-item';
+            const secName = topic.section || "General Topics";
+            if (!sectionsMap.has(secName)) {
+                sectionsMap.set(secName, []);
+            }
+            sectionsMap.get(secName).push({ topic, index });
+        });
+
+        // Render sections with expandable headers & subtopic lists
+        sectionsMap.forEach((items, secName) => {
+            const sectionWrapper = document.createElement('li');
+            sectionWrapper.className = 'sidebar-section'; // default collapsed
             
-            const a = document.createElement('a');
-            a.className = 'sidebar-link';
-            a.innerText = topic.title;
-            a.onclick = (e) => {
-                e.preventDefault();
-                loadCourseTopic(index);
+            const header = document.createElement('div');
+            header.className = 'sidebar-section-header';
+            header.innerHTML = `
+                <span>${secName}</span>
+                <svg class="section-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            `;
+            header.onclick = (e) => {
+                e.stopPropagation();
+                sectionWrapper.classList.toggle('open');
             };
             
-            li.appendChild(a);
-            sidebarList.appendChild(li);
+            const ul = document.createElement('ul');
+            ul.className = 'sidebar-subtopics';
+            
+            items.forEach(({ topic, index }) => {
+                const subLi = document.createElement('li');
+                subLi.className = 'sidebar-item';
+                
+                const a = document.createElement('a');
+                a.className = 'sidebar-link';
+                a.setAttribute('data-index', index);
+                a.innerText = topic.title;
+                a.onclick = (e) => {
+                    e.preventDefault();
+                    loadCourseTopic(index, true);
+                };
+                
+                subLi.appendChild(a);
+                ul.appendChild(subLi);
+            });
+            
+            sectionWrapper.appendChild(header);
+            sectionWrapper.appendChild(ul);
+            sidebarList.appendChild(sectionWrapper);
         });
         
-        // Load first topic
-        loadCourseTopic(0);
+        // Load first topic without expanding sections initially
+        loadCourseTopic(0, false);
         window.scrollTo(0, 0);
         
     } catch (err) {
@@ -380,18 +417,26 @@ async function openCourseView(langKey) {
     }
 }
 
-function loadCourseTopic(index) {
+function loadCourseTopic(index, autoExpand = true) {
     if (!currentCourseData || !currentCourseData.topics[index]) return;
     currentCourseTopicIndex = index;
     
     const topic = currentCourseData.topics[index];
     document.getElementById('courseMainContent').innerHTML = topic.content;
     
-    // Update active state in sidebar
+    // Update active state in sidebar using data-index attribute
     const links = document.querySelectorAll('#courseSidebarList .sidebar-link');
-    links.forEach((link, idx) => {
-        if (idx === index) {
+    links.forEach((link) => {
+        const linkIndex = parseInt(link.getAttribute('data-index'), 10);
+        if (linkIndex === index) {
             link.classList.add('active');
+            if (autoExpand) {
+                // Expand parent section if requested
+                const parentSection = link.closest('.sidebar-section');
+                if (parentSection) {
+                    parentSection.classList.add('open');
+                }
+            }
         } else {
             link.classList.remove('active');
         }
@@ -411,6 +456,16 @@ function loadNextTopicCourseView() {
         nextIndex = 0; // loop back to start
     }
     loadCourseTopic(nextIndex);
+    window.scrollTo(0, 0);
+}
+
+function loadPrevTopicCourseView() {
+    if (!currentCourseData) return;
+    let prevIndex = currentCourseTopicIndex - 1;
+    if (prevIndex < 0) {
+        prevIndex = currentCourseData.topics.length - 1; // loop to last
+    }
+    loadCourseTopic(prevIndex);
     window.scrollTo(0, 0);
 }
 
