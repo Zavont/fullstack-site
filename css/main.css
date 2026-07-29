@@ -1395,6 +1395,7 @@ body {
 @media (max-width: 768px) {
     .header {
         padding: 0 2rem;
+        flex-direction: row-reverse;
     }
 
     .hamburger {
