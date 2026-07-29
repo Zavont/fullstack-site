@@ -496,14 +496,20 @@ function loadPrevTopicCourseView() {
     window.scrollTo(0, 0);
 }
 
-function closeCourseView(e) {
-    if (e) e.preventDefault();
+function closeCourseView(event) {
+    if(event) event.preventDefault();
     document.getElementById('courseView').style.display = 'none';
     document.getElementById('landingPage').style.display = 'block';
     
-    // Close sidebar if open
+    // Reset sidebar state if open
     const sidebar = document.querySelector('.course-sidebar');
-    if (sidebar) sidebar.classList.remove('open');
+    if (sidebar && sidebar.classList.contains('open')) {
+        const overlay = document.getElementById('sidebarOverlay');
+        const hamburger = document.getElementById('hamburgerMenu');
+        sidebar.classList.remove('open');
+        if (overlay) overlay.classList.remove('show');
+        if (hamburger) hamburger.classList.remove('active');
+    }
     
     window.scrollTo(0, 0);
 }
