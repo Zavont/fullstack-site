@@ -88,6 +88,13 @@ body {
     align-items: center;
     padding: 0 4rem;
     z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.header.scrolled {
+    background: rgba(8, 8, 12, 0.95);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
 }
 
 .logo {
@@ -249,12 +256,29 @@ body {
     display: none;
     cursor: pointer;
     color: var(--text-main);
+    z-index: 1100;
 }
 
 .hamburger svg {
     width: 28px;
     height: 28px;
-    transition: var(--transition-smooth);
+}
+
+.hamburger line {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform-origin: center;
+}
+
+.hamburger.active line:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+}
+
+.hamburger.active line:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active line:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
 }
 
 .hamburger:hover {
@@ -1347,27 +1371,6 @@ body {
     align-items: center;
 }
 
-.mobile-topics-toggle {
-    display: none;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 0.75rem 1.25rem;
-    border-radius: var(--radius-sm);
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 12px var(--primary-glow);
-}
-
-.mobile-topics-toggle svg {
-    width: 20px;
-    height: 20px;
-}
-
 /* Footer Section */
 .footer {
     border-top: 1px solid var(--border);
@@ -1477,13 +1480,8 @@ body {
         padding: 60px 1.5rem;
     }
 
-    /* Course Layout Responsive */
     .course-layout {
         flex-direction: column;
-    }
-
-    .mobile-topics-toggle {
-        display: inline-flex;
     }
 
     .course-sidebar {
@@ -1506,6 +1504,25 @@ body {
     .course-sidebar.open {
         transform: translateX(0);
         box-shadow: 20px 0 40px rgba(0, 0, 0, 0.8);
+    }
+    
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 75px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 1040;
+        backdrop-filter: blur(4px);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .sidebar-overlay.show {
+        display: block;
+        opacity: 1;
     }
 
     .course-main {

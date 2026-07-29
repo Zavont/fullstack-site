@@ -379,6 +379,8 @@
 
     <!-- Course View Section (Hidden by default) -->
     <div id="courseView" class="course-layout" style="display: none;">
+        <!-- Overlay for mobile sidebar -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleCourseSidebar()"></div>
         <aside class="course-sidebar">
             <div class="sidebar-header">
                 <a href="#" class="back-link" onclick="closeCourseView(event)">
@@ -396,15 +398,8 @@
             </ul>
         </aside>
         <main class="course-main">
-            <!-- Mobile Sidebar Toggle -->
-            <button class="mobile-topics-toggle" id="mobileTopicsToggle" onclick="toggleCourseSidebar()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-                Course Topics
-            </button>
+            <!-- Mobile Sidebar Toggle removed (hamburger now handles it) -->
+
             
             <div class="course-content-container">
                 <div id="courseMainContent">

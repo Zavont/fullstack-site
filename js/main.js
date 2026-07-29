@@ -346,6 +346,16 @@ async function openCourseView(langKey) {
         document.getElementById('landingPage').style.display = 'none';
         document.getElementById('courseView').style.display = 'flex';
         
+        // Hide global nav and reset hamburger icon (for mobile)
+        const navMenu = document.querySelector('.nav');
+        if (navMenu && navMenu.classList.contains('active')) {
+            navMenu.classList.remove('active');
+        }
+        const hamburger = document.getElementById('hamburgerMenu');
+        if (hamburger && hamburger.classList.contains('active')) {
+            hamburger.classList.remove('active');
+        }
+        
         // Populate Sidebar with Collapsible Accordion Sections
         const sidebarList = document.getElementById('courseSidebarList');
         sidebarList.innerHTML = '';
@@ -380,6 +390,15 @@ async function openCourseView(langKey) {
             `;
             header.onclick = (e) => {
                 e.stopPropagation();
+                
+                // Close all other open sections for accordion effect
+                const allSections = document.querySelectorAll('.sidebar-section');
+                allSections.forEach(sec => {
+                    if (sec !== sectionWrapper && sec.classList.contains('open')) {
+                        sec.classList.remove('open');
+                    }
+                });
+                
                 sectionWrapper.classList.toggle('open');
             };
             
@@ -433,7 +452,15 @@ function loadCourseTopic(index, autoExpand = true) {
             if (autoExpand) {
                 // Expand parent section if requested
                 const parentSection = link.closest('.sidebar-section');
-                if (parentSection) {
+                if (parentSection && !parentSection.classList.contains('open')) {
+                    // Close all other sections first for accordion effect
+                    const allSections = document.querySelectorAll('.sidebar-section');
+                    allSections.forEach(sec => {
+                        if (sec !== parentSection) {
+                            sec.classList.remove('open');
+                        }
+                    });
+                    
                     parentSection.classList.add('open');
                 }
             }
@@ -445,7 +472,7 @@ function loadCourseTopic(index, autoExpand = true) {
     // Close sidebar on mobile after selection
     const sidebar = document.querySelector('.course-sidebar');
     if (sidebar && sidebar.classList.contains('open')) {
-        sidebar.classList.remove('open');
+        toggleCourseSidebar(); // Uses toggle to also handle overlay and hamburger states
     }
 }
 
@@ -483,8 +510,12 @@ function closeCourseView(e) {
 
 function toggleCourseSidebar() {
     const sidebar = document.querySelector('.course-sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const hamburger = document.getElementById('hamburgerMenu');
     if (sidebar) {
         sidebar.classList.toggle('open');
+        if (overlay) overlay.classList.toggle('show');
+        if (hamburger) hamburger.classList.toggle('active');
     }
 }
 
@@ -498,6 +529,16 @@ window.addEventListener('DOMContentLoaded', () => {
             const topicKey = link.getAttribute('data-topic');
             await openCourseView(topicKey);
         });
+    });
+    
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+        const header = document.querySelector('.header');
+        if (window.scrollY > 10) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
     });
     
     // Contact form submit interceptor
@@ -523,7 +564,15 @@ window.addEventListener('DOMContentLoaded', () => {
     
     if (hamburgerMenu && navMenu) {
         hamburgerMenu.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
+            const courseView = document.getElementById('courseView');
+            if (courseView && courseView.style.display === 'flex') {
+                // In Course View, toggle the side topics menu like GeeksforGeeks
+                toggleCourseSidebar();
+            } else {
+                // On Landing page, toggle the main nav
+                navMenu.classList.toggle('active');
+                hamburgerMenu.classList.toggle('active');
+            }
         });
     }
     
