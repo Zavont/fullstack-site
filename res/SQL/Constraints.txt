@@ -1,0 +1,118 @@
+What are Constraints?
+
+Constraints are rules applied to table columns to ensure the accuracy, consistency, and integrity of the data stored in a database.
+
+In simple words:
+
+Constraints prevent invalid data from being inserted into the database.
+
+
+Why do we use Constraints?
+
+Imagine a student database.
+
+Every student should have a unique ID.
+Student name should not be empty.
+Email should not be duplicated.
+Admission date should have today's date if not provided.
+Student ID should automatically increase.
+
+All these rules are implemented using constraints.
+
+
+Types of Constraints
+PRIMARY KEY
+NOT NULL
+UNIQUE
+DEFAULT
+AUTO_INCREMENT
+
+1. PRIMARY KEY
+Definition
+
+A PRIMARY KEY is a column (or combination of columns) that uniquely identifies each row in a table.
+
+Rules of PRIMARY KEY
+Values must be unique.
+Cannot contain NULL.
+Only one PRIMARY KEY is allowed per table.
+
+CREATE TABLE Student(
+    student_id INT PRIMARY KEY,
+    student_name VARCHAR(100)
+);
+
+2. NOT NULL
+Definition
+
+The NOT NULL constraint ensures that a column must always contain a value.
+
+It prevents empty values.
+
+Example:
+
+CREATE TABLE Employee(
+    id INT,
+    name VARCHAR(100) NOT NULL
+);
+
+3. UNIQUE
+Definition
+
+The UNIQUE constraint ensures that all values in a column are different.
+
+Duplicate values are not allowed.
+
+Unlike PRIMARY KEY,
+
+A table can have multiple UNIQUE constraints.
+
+Real-world Example
+
+Unique values
+
+Email
+Aadhaar Number
+Passport Number
+PAN Number
+
+
+
+PRIMARY KEY vs UNIQUE
+
+| PRIMARY KEY                  | UNIQUE                |
+| ---------------------------- | --------------------- |
+| Only one per table           | Many allowed          |
+| Cannot be NULL               | Can contain NULL      |
+| Uniquely identifies each row | Ensures unique values |
+| Automatically indexed        | Automatically indexed |
+
+
+4. DEFAULT
+
+
+The DEFAULT constraint automatically assigns a value if the user does not provide one during insertion.
+
+CREATE TABLE Employee(
+    id INT,
+    salary DECIMAL(10,2) DEFAULT 15000
+);
+
+5. AUTO_INCREMENT
+Definition
+
+AUTO_INCREMENT automatically generates sequential numbers whenever a new record is inserted.
+
+No need to manually enter IDs.
+
+CREATE TABLE Student(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100)
+);
+
+INSERT INTO Student(name)
+VALUES
+('Mohamed'),
+('Rahul'),
+('Priya');
+

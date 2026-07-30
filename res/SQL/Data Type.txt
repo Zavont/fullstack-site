@@ -1,0 +1,227 @@
+What is a Data Type?
+
+A Data Type defines the type of value that can be stored in a table column.
+
+It tells MySQL:
+
+What kind of data can be stored.
+How much storage space is required.
+What operations can be performed on the data.
+
+
+Example:
+
+CREATE TABLE Student(
+    id INT,
+    name VARCHAR(100),
+    age INT,
+    fees DECIMAL(10,2),
+    dob DATE
+);
+
+
+
+Types of Data Types in MySQL
+
+MySQL data types are divided into 5 categories:
+
+Numeric Data Types
+String (Character) Data Types
+Date and Time Data Types
+Boolean Data Type
+Binary Data Types
+
+
+
+1. Numeric Data Types
+
+Used to store numbers.
+There are two types:
+
+Integer Types
+Decimal/Floating Point Types
+
+
+| Data Type | Storage | Example    |
+| --------- | ------- | ---------- |
+| TINYINT   | 1 Byte  | Age        |
+| SMALLINT  | 2 Bytes | Marks      |
+| MEDIUMINT | 3 Bytes | Population |
+| INT       | 4 Bytes | Student ID |
+| BIGINT    | 8 Bytes | Large IDs  |
+
+
+Decimal Data Types
+
+Used when decimal values are needed.
+
+1. FLOAT
+
+Approximate decimal values.
+
+Used for
+
+Height
+Weight
+Scientific calculations
+Limitation
+
+FLOAT may lose precision because it stores approximate values.
+
+Example
+
+0.1 + 0.2
+
+Expected:
+0.3
+
+May return:
+0.30000001
+
+
+
+2. DOUBLE
+
+More accurate than FLOAT.
+
+Suitable for
+
+Scientific applications
+GPS coordinates
+Large decimal calculations
+
+3. DECIMAL
+
+Stores exact decimal values.
+
+salary DECIMAL(10,2)
+
+10 digits total
+2 digits after decimal
+
+Example
+99999999.99
+
+
+2. String (Character) Data Types
+
+Used to store text.
+
+Common types:
+
+CHAR
+VARCHAR
+TEXT
+
+
+CHAR
+
+Fixed-length string.
+
+Even if one character is stored, the full fixed length is reserved.
+
+Suitable for
+
+Gender
+Country Code
+Blood Group
+
+
+VARCHAR
+
+Variable-length string.
+
+Suitable for
+
+Name
+Address
+Email
+City
+
+
+TEXT
+
+Stores very large text.
+
+Suitable for
+
+Feedback
+Comments
+Articles
+Product Description
+
+
+3. Date and Time Data Types
+
+Used to store date and time.
+
+| Data Type | Stores                           |
+| --------- | -------------------------------- |
+| DATE      | Date only                        |
+| TIME      | Time only                        |
+| DATETIME  | Date + Time                      |
+| TIMESTAMP | Date + Time (often auto-managed) |
+| YEAR      | Year only                        |
+
+
+4. Boolean Data Type
+
+MySQL treats BOOLEAN as an alias for TINYINT(1).
+
+
+
+5. Binary Data Types
+
+Used to store binary data such as images, files, or encrypted content.
+
+=> BINARY
+
+Fixed-length binary data.
+
+example:
+code BINARY(10)
+
+=> VARBINARY
+
+Variable-length binary data.
+
+Example:
+password_hash VARBINARY(255)
+
+=>BLOB (Binary Large Object)
+
+Stores large binary data.
+
+Example
+
+photo BLOB
+
+Suitable for
+
+Images
+PDF files
+Audio
+Video
+
+
+
+
+Complete Example
+
+
+
+CREATE TABLE Employee(
+    id INT PRIMARY KEY,
+    name VARCHAR(100),
+    age TINYINT,
+    salary DECIMAL(10,2),
+    email VARCHAR(100),
+    gender CHAR(1),
+    department ENUM('HR','IT','Sales'),
+    skills SET('Java','Python','React','SQL'),
+    joining_date DATE,
+    login_time TIME,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    isActive BOOLEAN,
+    profile_photo BLOB
+);
