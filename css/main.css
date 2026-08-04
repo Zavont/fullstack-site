@@ -119,6 +119,7 @@ body {
 
 .nav {
     height: 100%;
+    margin-right: 100px;
 }
 
 .nav-list {
@@ -1406,7 +1407,7 @@ body {
         justify-content: flex-start;
     }
 
-    .logo {
+    .header .logo {
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
