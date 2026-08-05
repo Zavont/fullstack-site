@@ -474,6 +474,9 @@ function loadCourseTopic(index, autoExpand = true) {
     if (sidebar && sidebar.classList.contains('open')) {
         toggleCourseSidebar(); // Uses toggle to also handle overlay and hamburger states
     }
+
+    // Scroll to the top of the screen when loading a topic/subtopic
+    window.scrollTo(0, 0);
 }
 
 function loadNextTopicCourseView() {
