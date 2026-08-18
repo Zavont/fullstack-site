@@ -17,14 +17,15 @@ Basics
     - 3d array
     - array manipulation
 
- Functions
+ 3. Functions
     - Basics,types
     - Synchronous
     - Asynchronous
     - callbacks
     - promises
     - async/await
-    - recursion
+    - fetch
+    - api task
 
  Objects    
     - Basics

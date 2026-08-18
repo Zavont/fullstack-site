@@ -1,0 +1,73 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            padding: 24px;
+            max-width: 1200px;
+            margin: 0 auto; /* Fix overall alignment */
+        }
+        .box {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Fix horizontal alignment */
+            justify-content: space-between;
+            background-color: cadetblue;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            padding: 24px; /* Fix internal padding */
+            text-align: center;
+        }
+        .box img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div id="layout">
+
+    </div>
+
+
+    <script>
+        let element = document.getElementById("layout")
+        fetch("https://dummyjson.com/products")
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                data.products.map((product) => {
+                    element.innerHTML += `
+                        <div class="box">
+                            <img src=${product.thumbnail} alt="">
+                            <h1>${product.title}</h1>
+                            <h3>${product.description}</h3>
+                            <h3>${product.price}
+                        </div>
+                    `
+                })
+
+            })
+            .catch((err) => {
+            })
+
+       
+    </script>
+
+
+
+</body>
+
+</html>
