@@ -11,6 +11,12 @@ export default function Navbar() {
     
     const isCoursePage = location.pathname.startsWith('/course');
 
+    // Auto-close mobile menus on route change
+    React.useEffect(() => {
+        setIsNavOpen(false);
+        setActiveDropdown(null);
+    }, [location.pathname]);
+
     const handleHamburgerClick = () => {
         if (isCoursePage) {
             toggleSidebar();
@@ -34,7 +40,7 @@ export default function Navbar() {
 
     return (
         <header className="header">
-            <Link to="/" className="logo">
+            <Link to="/" className="logo" onClick={() => { setIsNavOpen(false); setActiveDropdown(null); }}>
                 <span>FullStack</span>Notes
             </Link>
 

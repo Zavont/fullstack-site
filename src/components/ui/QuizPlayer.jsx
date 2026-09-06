@@ -129,28 +129,28 @@ export default function QuizPlayer({ questions = [], topicTitle = "Quiz", course
                         {feedback}
                     </p>
 
-                    <div style={{
+                    <div className="quiz-results-metrics" style={{
                         display: 'flex',
                         justifyContent: 'center',
-                        gap: '2rem',
+                        gap: '1rem',
                         marginBottom: '2rem',
                         flexWrap: 'wrap'
                     }}>
-                        <div style={{ background: 'rgba(255,255,255,0.03)', padding: '1rem 1.5rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
+                        <div className="quiz-metric-box" style={{ background: 'rgba(255,255,255,0.03)', padding: '1rem 1.5rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', minWidth: '130px' }}>
                             <div style={{ fontSize: '0.85rem', color: 'var(--text-dim)', textTransform: 'uppercase' }}>Score</div>
                             <div style={{ fontSize: '1.8rem', fontWeight: 700, color: badgeColor }}>{correctCount} / {totalQ}</div>
                         </div>
-                        <div style={{ background: 'rgba(255,255,255,0.03)', padding: '1rem 1.5rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
+                        <div className="quiz-metric-box" style={{ background: 'rgba(255,255,255,0.03)', padding: '1rem 1.5rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', minWidth: '130px' }}>
                             <div style={{ fontSize: '0.85rem', color: 'var(--text-dim)', textTransform: 'uppercase' }}>Accuracy</div>
                             <div style={{ fontSize: '1.8rem', fontWeight: 700, color: badgeColor }}>{scorePercent}%</div>
                         </div>
-                        <div style={{ background: 'rgba(255,255,255,0.03)', padding: '1rem 1.5rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
+                        <div className="quiz-metric-box" style={{ background: 'rgba(255,255,255,0.03)', padding: '1rem 1.5rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', minWidth: '130px' }}>
                             <div style={{ fontSize: '0.85rem', color: 'var(--text-dim)', textTransform: 'uppercase' }}>Answered</div>
                             <div style={{ fontSize: '1.8rem', fontWeight: 700, color: 'var(--text-main)' }}>{answeredCount} / {totalQ}</div>
                         </div>
                     </div>
 
-                    <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+                    <div className="quiz-results-actions" style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
                         <button 
                             className="btn btn-primary" 
                             onClick={handleRestart}
@@ -234,7 +234,7 @@ export default function QuizPlayer({ questions = [], topicTitle = "Quiz", course
                     marginBottom: '1.5rem',
                     boxShadow: '0 8px 24px rgba(0,0,0,0.3)'
                 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
                         <h4 style={{ margin: 0, fontSize: '0.95rem', fontWeight: 600 }}>Jump to Question:</h4>
                         <span style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>Green = Correct, Red = Incorrect, Gray = Unanswered</span>
                     </div>
@@ -306,7 +306,7 @@ export default function QuizPlayer({ questions = [], topicTitle = "Quiz", course
                 }}
             >
                 {/* Question Card Top Indicator */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.5rem' }}>
                     <span style={{
                         background: 'rgba(59, 130, 246, 0.15)',
                         color: '#60a5fa',
@@ -373,6 +373,7 @@ export default function QuizPlayer({ questions = [], topicTitle = "Quiz", course
                             display: 'flex',
                             alignItems: 'center',
                             gap: '1rem',
+                            flexWrap: 'wrap',
                             cursor: currentAnswer.revealed ? 'default' : 'pointer',
                             transition: 'all 0.2s ease',
                             userSelect: 'none'
@@ -390,14 +391,14 @@ export default function QuizPlayer({ questions = [], topicTitle = "Quiz", course
                                 rowStyle.fontWeight = '600';
                                 badgeBg = '#10b981';
                                 badgeColor = '#ffffff';
-                                statusText = <span style={{ marginLeft: 'auto', color: '#34d399', fontWeight: 700, fontSize: '0.85rem' }}>✓ Correct Answer</span>;
+                                statusText = <span className="quiz-option-status" style={{ marginLeft: 'auto', color: '#34d399', fontWeight: 700, fontSize: '0.85rem' }}>✓ Correct Answer</span>;
                             } else if (isSelectedOption) {
                                 rowStyle.background = 'rgba(239, 68, 68, 0.12)';
                                 rowStyle.border = '1px solid #ef4444';
                                 rowStyle.color = '#fecaca';
                                 badgeBg = '#ef4444';
                                 badgeColor = '#ffffff';
-                                statusText = <span style={{ marginLeft: 'auto', color: '#f87171', fontWeight: 700, fontSize: '0.85rem' }}>✗ Your Choice</span>;
+                                statusText = <span className="quiz-option-status" style={{ marginLeft: 'auto', color: '#f87171', fontWeight: 700, fontSize: '0.85rem' }}>✗ Your Choice</span>;
                             } else {
                                 rowStyle.opacity = 0.55;
                             }
@@ -484,7 +485,7 @@ export default function QuizPlayer({ questions = [], topicTitle = "Quiz", course
                 )}
 
                 {/* Bottom Navigation Buttons */}
-                <div style={{
+                <div className="quiz-bottom-nav" style={{
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
@@ -496,7 +497,7 @@ export default function QuizPlayer({ questions = [], topicTitle = "Quiz", course
                 }}>
                     <button 
                         type="button"
-                        className="btn btn-secondary"
+                        className="btn btn-secondary quiz-nav-prev-btn"
                         onClick={handlePrev}
                         disabled={currentIndex === 0}
                         style={{
@@ -511,13 +512,13 @@ export default function QuizPlayer({ questions = [], topicTitle = "Quiz", course
                         <span>←</span> Previous
                     </button>
 
-                    <div style={{ fontSize: '0.9rem', color: 'var(--text-dim)' }}>
+                    <div className="quiz-question-counter" style={{ fontSize: '0.9rem', color: 'var(--text-dim)' }}>
                         Question {currentIndex + 1} / {totalQ}
                     </div>
 
                     <button 
                         type="button"
-                        className="btn btn-primary"
+                        className="btn btn-primary quiz-nav-next-btn"
                         onClick={handleNext}
                         style={{
                             display: 'flex',

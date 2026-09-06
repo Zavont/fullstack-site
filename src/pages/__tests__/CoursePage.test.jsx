@@ -17,7 +17,14 @@ const mockTopics = {
 const mockCourseData = {
   language: 'HTML',
   topics: [
-    { id: 'html', title: 'HTML Basics', content: '<p>HTML content</p>' }
+    { 
+      id: 'html-quiz', 
+      title: 'Quiz', 
+      section: 'Test', 
+      quiz: [
+        { id: 1, question: 'Sample Question', options: ['A', 'B', 'C', 'D'], correct: 0, explanation: 'Sample Exp' }
+      ] 
+    }
   ]
 };
 
@@ -48,64 +55,14 @@ describe('CoursePage - Notes Integration', () => {
     );
   };
 
-  it('opens notes modal and saves a new note to localStorage', async () => {
-    const user = userEvent.setup();
+  it('does not render floating Add Notes button or My Notes on Quiz on quiz topic', async () => {
     renderComponent();
 
-    // 1. Verify "Add Notes" button is rendered
-    const addNotesBtn = screen.getByRole('button', { name: /add notes/i });
-    expect(addNotesBtn).toBeInTheDocument();
+    // 1. Verify floating "Add Notes" button is NOT rendered
+    expect(screen.queryByRole('button', { name: /add notes/i })).not.toBeInTheDocument();
 
-    // 2. Click button to open modal
-    await user.click(addNotesBtn);
-
-    // Verify modal is open by finding "My Notes" header
-    expect(screen.getByText('My Notes')).toBeInTheDocument();
-    
-    // Verify initial empty state
-    expect(screen.getByText('No notes yet for this topic.')).toBeInTheDocument();
-
-    // 3. Type a note
-    const textarea = screen.getByPlaceholderText('Write your note here...');
-    await user.type(textarea, 'This is a test note for HTML');
-
-    // 4. Click Save Note
-    const saveBtn = screen.getByRole('button', { name: /save note/i });
-    await user.click(saveBtn);
-
-    // 5. Verify note is displayed in the list
-    expect(screen.getAllByText('This is a test note for HTML').length).toBeGreaterThanOrEqual(1);
-    
-    // The empty state message should be gone
-    expect(screen.queryByText('No notes yet for this topic.')).not.toBeInTheDocument();
-
-    // 6. Verify it was saved to localStorage
-    const savedNotes = JSON.parse(localStorage.getItem('notes_html'));
-    expect(savedNotes).toHaveLength(1);
-    expect(savedNotes[0].text).toBe('This is a test note for HTML');
-
-    // 7. Verify edit and delete buttons are present
-    const editBtns = screen.getAllByRole('button', { name: /edit note/i });
-    const deleteBtns = screen.getAllByRole('button', { name: /delete note/i });
-    expect(editBtns.length).toBeGreaterThanOrEqual(1);
-    expect(deleteBtns.length).toBeGreaterThanOrEqual(1);
-
-    // 8. Test edit note flow
-    await user.click(editBtns[0]);
-    const editInputs = screen.getAllByDisplayValue('This is a test note for HTML');
-    expect(editInputs.length).toBeGreaterThanOrEqual(1);
-    await user.clear(editInputs[0]);
-    await user.type(editInputs[0], 'Updated note content');
-    const saveEditBtns = screen.getAllByRole('button', { name: /^save/i });
-    // Click the save button inside the edit form
-    await user.click(saveEditBtns[0]);
-    expect(screen.getAllByText('Updated note content').length).toBeGreaterThanOrEqual(1);
-
-    // 9. Test delete note flow
-    const updatedDeleteBtns = screen.getAllByRole('button', { name: /delete note/i });
-    await user.click(updatedDeleteBtns[0]);
-    expect(screen.queryByText('Updated note content')).not.toBeInTheDocument();
-    expect(JSON.parse(localStorage.getItem('notes_html'))).toEqual([]);
+    // 2. Verify inline "My Notes on Quiz" is NOT rendered
+    expect(screen.queryByText(/My Notes on Quiz/i)).not.toBeInTheDocument();
   });
 
   it('isolates notes per topic and allows permanent note addition in topic content', async () => {
@@ -164,7 +121,10 @@ describe('CoursePage - Notes Integration', () => {
 
     // Verify note from HTML Tags is NOT in HTML Elements
     expect(screen.queryByText('Note specifically for HTML Tags')).not.toBeInTheDocument();
-    expect(screen.getByText('No notes yet for this topic. Use the box above or the floating button to add your first note!')).toBeInTheDocument();
+    expect(screen.getByText('No notes yet for this topic. Use the box above to add your first note!')).toBeInTheDocument();
+
+    // Verify floating Add Notes button is NOT rendered on regular topics
+    expect(screen.queryByRole('button', { name: /add notes/i })).not.toBeInTheDocument();
 
     // 4. Add note to HTML Elements
     const elementsInput = screen.getByPlaceholderText('Add a note to HTML Elements...');

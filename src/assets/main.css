@@ -120,7 +120,6 @@ body {
 
 .nav {
     height: 100%;
-    margin-right: 100px;
 }
 
 .nav-list {
@@ -167,7 +166,8 @@ body {
     margin-bottom: 2px;
 }
 
-.nav-item:hover .chevron {
+.nav-item:hover .chevron,
+.nav-item.open .chevron {
     transform: rotate(225deg);
     border-color: var(--primary);
 }
@@ -353,7 +353,7 @@ body {
 }
 
 .hero h1 {
-    font-size: 3.5rem;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
     font-weight: 800;
     line-height: 1.2;
     margin-bottom: 1.5rem;
@@ -367,7 +367,7 @@ body {
 }
 
 .hero p {
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
     color: var(--text-muted);
     max-width: 700px;
     margin: 0 auto 3rem;
@@ -376,7 +376,7 @@ body {
 /* Quick Access Cards */
 .quick-access {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
     gap: 1.5rem;
     max-width: 1100px;
     margin: 0 auto;
@@ -813,7 +813,7 @@ body {
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
     gap: 2rem;
 }
 
@@ -1396,8 +1396,27 @@ body {
     margin-top: 1rem;
 }
 
+/* Medium-large screen / landscape tablet breathing room */
+@media (max-width: 1100px) and (min-width: 969px) {
+    .header {
+        padding: 0 2rem;
+    }
+
+    .nav-list {
+        gap: 1.5rem;
+    }
+
+    .course-main {
+        padding: 2.5rem 2rem;
+    }
+
+    .course-content-container {
+        padding: 2rem 1.75rem;
+    }
+}
+
 /* Responsive adjustments */
-@media (max-width: 768px) {
+@media (max-width: 968px) {
     html {
         scroll-padding-top: 0;
     }
@@ -1418,6 +1437,9 @@ body {
         transform: translateX(-50%);
         font-size: 1.2rem;
         white-space: nowrap;
+        max-width: calc(100% - 90px);
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .hamburger {
@@ -1491,7 +1513,7 @@ body {
     }
 
     .hero h1 {
-        font-size: 2rem;
+        font-size: clamp(2rem, 6vw, 2.5rem);
     }
 
     .hero p {
@@ -1528,7 +1550,7 @@ body {
         position: fixed;
         top: 75px;
         left: 0;
-        width: 280px;
+        width: min(300px, 85vw);
         height: calc(100vh - 75px);
         max-height: none;
         border-right: 1px solid var(--border);
@@ -1565,12 +1587,17 @@ body {
 
     .course-main {
         margin-left: 0;
-        padding: 1.5rem 0.75rem;
+        padding: 2rem 1.25rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .course-content-container {
-        padding: 1rem;
+        padding: 1.5rem 1.25rem;
         border-radius: var(--radius-sm);
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .course-topic h2 {
@@ -1580,28 +1607,42 @@ body {
 
     .course-topic h3 {
         font-size: 1.15rem;
+        word-break: break-word;
     }
 
     .course-topic pre {
         padding: 1rem;
-        font-size: 0.8rem;
+        font-size: 0.85rem;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        max-width: 100%;
     }
 
-    .course-topic code {
-        font-size: 0.8rem;
-        word-break: break-all;
+    .course-topic :not(pre) > code {
+        font-size: 0.82rem;
+        word-break: break-word;
     }
 
+    .course-topic pre code {
+        font-size: 0.82rem;
+        white-space: pre;
+        word-break: normal;
+        overflow-wrap: normal;
+    }
+
+    .course-topic table,
     .gfg-table {
         display: block;
+        width: 100%;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
         font-size: 0.85rem;
+        margin: 1.5rem 0;
     }
 
     .gfg-table th,
     .gfg-table td {
-        padding: 8px 10px;
+        padding: 8px 12px;
         white-space: nowrap;
     }
 
@@ -1615,7 +1656,7 @@ body {
     }
 
     .gfg-syntax-box pre {
-        font-size: 0.8rem;
+        font-size: 0.82rem;
     }
 
     .course-actions {
@@ -1623,19 +1664,114 @@ body {
         gap: 1rem;
     }
 
+    .course-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
     .footer {
         padding: 3rem 1rem;
     }
 }
 
-/* Extra small phones */
+/* Specific Phone Optimizations (<= 640px) */
+@media (max-width: 640px) {
+    .hero h1 br {
+        display: none;
+    }
+
+    .course-main {
+        padding: 1.25rem 0.75rem;
+    }
+
+    .course-content-container {
+        padding: 1rem 0.75rem;
+    }
+
+    .project-card {
+        padding: 1.5rem;
+    }
+}
+
+/* Quiz Player Responsive Enhancements */
+.quiz-active-card {
+    transition: border-color 0.2s ease;
+}
+
+.quiz-interactive-option:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+@media (max-width: 768px) {
+    .quiz-active-card {
+        padding: 1.25rem 1rem !important;
+    }
+
+    .quiz-interactive-option {
+        padding: 0.85rem 1rem !important;
+        font-size: 0.92rem !important;
+        gap: 0.75rem !important;
+    }
+
+    .quiz-option-status {
+        width: 100%;
+        margin-left: 2.75rem !important;
+        margin-top: 0.25rem;
+        font-size: 0.8rem !important;
+    }
+
+    .quiz-bottom-nav {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 0.75rem !important;
+    }
+
+    .quiz-bottom-nav .quiz-nav-prev-btn,
+    .quiz-bottom-nav .quiz-nav-next-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .quiz-bottom-nav .quiz-question-counter {
+        text-align: center;
+        order: -1;
+        margin-bottom: 0.25rem;
+    }
+
+    .quiz-results-metrics {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)) !important;
+        gap: 0.75rem !important;
+        width: 100%;
+    }
+
+    .quiz-metric-box {
+        padding: 0.75rem 0.5rem !important;
+        min-width: unset !important;
+        text-align: center;
+    }
+
+    .quiz-results-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .quiz-results-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Extra small phones (<= 380px) */
 @media (max-width: 380px) {
     .header {
         padding: 0 0.75rem;
     }
 
-    .logo {
+    .header .logo {
         font-size: 1.1rem;
+        max-width: calc(100% - 70px);
     }
 
     .hero h1 {
@@ -1647,7 +1783,7 @@ body {
     }
 
     .course-content-container {
-        padding: 0.75rem;
+        padding: 0.75rem 0.5rem;
     }
 }
 
