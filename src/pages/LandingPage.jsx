@@ -1,10 +1,7 @@
 import React from 'react';
 import QuickAccessCard from '../components/ui/QuickAccessCard';
-import CodeBlock from '../components/ui/CodeBlock';
-import { useCourse } from '../context/CourseContext';
 
 export default function LandingPage() {
-    const { activeTopic, selectTopic } = useCourse();
 
     const quickCards = [
         {
@@ -85,84 +82,6 @@ export default function LandingPage() {
                     ))}
                 </div>
             </main>
-
-            {/* Sandbox Section */}
-            <section className="sandbox-section" id="sandbox">
-                <div className="sandbox-container" style={{ '--theme-color': activeTopic?.themeColor || 'var(--primary)' }}>
-                    {/* Sandbox Left details */}
-                    <div className="sandbox-details">
-                        <div className="sandbox-header">
-                            <span className="sandbox-category">{activeTopic?.category}</span>
-                            <h2 className="sandbox-title">{activeTopic?.title || 'Interactive Sandbox'}</h2>
-                            <p className="sandbox-desc">
-                                {activeTopic?.description || 'Select any frontend or backend language from the navbar list to view interactive code workspaces and custom concepts.'}
-                            </p>
-                        </div>
-
-                        <div className="concepts-group">
-                            <h4 className="concepts-title">Key Core Concepts</h4>
-                            <div className="concepts-tags">
-                                {activeTopic?.tags ? activeTopic.tags.map(tag => (
-                                    <span key={tag} className="concept-tag">{tag}</span>
-                                )) : (
-                                    <>
-                                        <span className="concept-tag">Web Standards</span>
-                                        <span className="concept-tag">Interactive playgrounds</span>
-                                    </>
-                                )}
-                            </div>
-                        </div>
-
-                        <div className="interactive-quiz">
-                            <h4 className="concepts-title" style={{ marginBottom: '0.5rem' }}>Topic Quick Quiz</h4>
-                            <div>
-                                {activeTopic?.quiz ? (
-                                    <div className="quiz-card">
-                                        <p style={{ fontWeight: 600, color: 'var(--text)', marginBottom: '0.75rem' }}>{activeTopic.quiz.question}</p>
-                                        <div className="quiz-options">
-                                            {activeTopic.quiz.options.map((opt, i) => (
-                                                <button key={i} className="quiz-option" onClick={(e) => {
-                                                    const target = e.currentTarget;
-                                                    if(opt.isCorrect) {
-                                                        target.classList.add('correct');
-                                                    } else {
-                                                        target.classList.add('incorrect');
-                                                    }
-                                                }}>
-                                                    {opt.text}
-                                                </button>
-                                            ))}
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <p style={{ color: 'var(--text-dim)', fontSize: '0.85rem' }}>Select a course topic to load quiz assessment.</p>
-                                )}
-                            </div>
-                        </div>
-
-                        <div className="sandbox-actions">
-                            <button className="btn btn-primary" onClick={() => {
-                                const keys = ['html', 'css', 'js', 'react', 'java', 'springboot', 'sql'];
-                                const currIdx = keys.indexOf(activeTopic?.filename ? Object.keys(activeTopic).find(key => activeTopic[key] === activeTopic) : 'html');
-                                const nextKey = keys[(currIdx + 1) % keys.length];
-                                selectTopic(nextKey);
-                            }}>
-                                Next Lesson
-                            </button>
-                            <button className="btn btn-secondary" onClick={() => window.open('https://github.com', '_blank')}>
-                                Docs
-                            </button>
-                        </div>
-                    </div>
-
-                    {/* Sandbox Right code preview */}
-                    <CodeBlock 
-                        filename={activeTopic?.filename || 'workspace'} 
-                        codeHtml={activeTopic?.code || 'Select a topic from the header...'} 
-                        rawCode={activeTopic?.rawCode || ''}
-                    />
-                </div>
-            </section>
 
             {/* Projects Section */}
             <section className="projects-section" id="projects">

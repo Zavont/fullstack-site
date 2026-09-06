@@ -1842,3 +1842,150 @@ body {
     background: rgba(239, 68, 68, 0.15);
     border-color: rgba(239, 68, 68, 0.3);
 }
+
+/* ==========================================================================
+   Test Section Styles (Quiz & Interview Questions)
+   ========================================================================== */
+.test-section-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1.75rem;
+}
+
+.test-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    transition: var(--transition-smooth);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.test-card:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.test-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.test-card-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.test-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.25rem 0.65rem;
+    border-radius: 99px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    white-space: nowrap;
+}
+
+.test-badge-easy {
+    background: rgba(16, 185, 129, 0.12);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.test-badge-medium {
+    background: rgba(245, 158, 11, 0.12);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.test-badge-hard {
+    background: rgba(239, 68, 68, 0.12);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.test-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin: 1rem 0;
+}
+
+.test-option-row {
+    padding: 0.8rem 1.1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: var(--transition-smooth);
+}
+
+.test-option-row.correct {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.4);
+    color: #a7f3d0;
+    font-weight: 600;
+}
+
+.test-details {
+    margin-top: 1rem;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.015);
+    border: 1px dashed var(--border);
+    overflow: hidden;
+    transition: var(--transition-smooth);
+}
+
+.test-details[open] {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.test-details summary {
+    padding: 0.85rem 1.1rem;
+    font-weight: 600;
+    font-size: 0.92rem;
+    cursor: pointer;
+    color: var(--primary);
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition-smooth);
+}
+
+.test-details summary:hover {
+    color: #818cf8;
+}
+
+.test-details-content {
+    padding: 1.1rem;
+    border-top: 1px dashed var(--border);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+}
+
+.test-details-content pre {
+    margin: 0.75rem 0;
+    background: #0f172a;
+    padding: 0.85rem 1.1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    overflow-x: auto;
+}
+
+.test-details-content code {
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 0.88rem;
+}

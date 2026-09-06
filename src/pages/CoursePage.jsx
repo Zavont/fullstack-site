@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useCourse } from '../context/CourseContext';
+import QuizPlayer from '../components/ui/QuizPlayer';
 
 export default function CoursePage() {
     const { topicId } = useParams();
@@ -288,7 +289,16 @@ export default function CoursePage() {
                             if (!activeTopic) return null;
                             return (
                                 <section id={activeTopic.id} key={activeTopic.id} className="topic-section" style={{ marginBottom: '4rem' }}>
-                                    <div dangerouslySetInnerHTML={{ __html: activeTopic.content }} />
+                                    {activeTopic?.quiz && Array.isArray(activeTopic.quiz) && activeTopic.quiz.length > 0 ? (
+                                        <QuizPlayer 
+                                            key={activeTopic.id}
+                                            questions={activeTopic.quiz} 
+                                            topicTitle={activeTopic.title} 
+                                            courseName={courseData?.language || 'Course'} 
+                                        />
+                                    ) : (
+                                        <div dangerouslySetInnerHTML={{ __html: activeTopic.content }} />
+                                    )}
                                     
                                     {/* Permanent Notes Section in Topic Content */}
                                     <div className="topic-notes-appended" style={{ marginTop: '4rem', paddingTop: '2.5rem', borderTop: '1px solid var(--border)' }}>
